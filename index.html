@@ -2,8 +2,14 @@
 <html>
 <head>
 	<meta charset='utf-8'>
-	<title>Leaflet.Control.FullScreen Demo</title>
+	<title>Dart News</title>
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+	<script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+	<!-- <link rel="stylesheet" href="example/screen.css" /> -->
+		<link rel="stylesheet" href="dist/MarkerCluster.css" />
+	<link rel="stylesheet" href="dist/MarkerCluster.Default.css" />
+	<script src="dist/leaflet.markercluster-src.js"></script>
+
 	<style type="text/css">
       	html, body, #map {
 	        width: 100%;
@@ -17,28 +23,44 @@
 		#map:full-screen { width: 100% !important; height: 100% !important; z-index: 99999; }
 		.leaflet-pseudo-fullscreen { position: fixed !important; width: 100% !important; height: 100% !important; top: 0px !important; left: 0px !important; z-index: 99999; }
 	</style>
-	<script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+
 	<script src="Control.FullScreen.js"></script>
+
+	<script src="example/realworld.388.js"></script>
+
 </head>
 <body>
 	
 	<div id="map"></div>
 	
 	<script>
-		var base = new L.TileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
-			maxZoom: 18,
-			attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-		});
+		var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
+			cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade, Points &copy 2012 LINZ',
+			cloudmade = L.tileLayer(cloudmadeUrl, {maxZoom: 19, attribution: cloudmadeAttribution});
+			// latlng = L.latLng(-37.82, 175.24);
 		
 		var map = new L.Map('map', {
-			layers: [base],
+			layers: [cloudmade],
+			// center: new L.latLng(-37.82, 175.24),
 			center: new L.LatLng(28.64, 77.23),
-			zoom: 6,
+			zoom: 10,
 			fullscreenControl: true,
 			fullscreenControlOptions: { // optional
 				title:"Show me the fullscreen !"
 			}
 		});
+
+		var markers = L.markerClusterGroup();
+		
+		for (var i = 0; i < addressPoints.length; i++) {
+			var a = addressPoints[i];
+			var title = a[2];
+			var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title });
+			marker.bindPopup(title);
+			markers.addLayer(marker);
+		}
+
+		map.addLayer(markers);
 
 		// detect fullscreen toggling
 		map.on('enterFullscreen', function(){
