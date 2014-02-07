@@ -2,7 +2,7 @@
 //An extract of address points from the LINZ bulk extract: http://www.linz.govt.nz/survey-titles/landonline-data/landonline-bde
 //Should be this data set: http://data.linz.govt.nz/#/layer/779-nz-street-address-electoral/
 var addressPoints = [
-[28.6510922667, 77.2209316333, "2"],
+[28.6510922667, 77.2209316333, "<div> lorem ipsum <p> hello world <br> 100381A <div>"],
 [28.6510819833, 77.2213903167, "3"],
 [28.6510881833, 77.2215004833, "3A"],
 [28.6511946833, 77.2213655333, "1"],
