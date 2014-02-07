@@ -8,7 +8,9 @@
 	<!-- <link rel="stylesheet" href="example/screen.css" /> -->
 		<link rel="stylesheet" href="dist/MarkerCluster.css" />
 	<link rel="stylesheet" href="dist/MarkerCluster.Default.css" />
+
 	<script src="dist/leaflet.markercluster-src.js"></script>
+
 
 	<style type="text/css">
       	html, body, #map {
@@ -27,15 +29,15 @@
 	<script src="Control.FullScreen.js"></script>
 
 	<script src="example/realworld.388.js"></script>
+	<script src="example/mycustommarker.js"></script>
 
 </head>
 <body>
-	
 	<div id="map"></div>
-	
 	<script>
+		
 		var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
-			cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade, Points &copy 2012 LINZ',
+			cloudmadeAttribution = 'Map data &copy; 2014 OpenStreetMap contributors, Imagery &copy; 2014 debjyotipaul.in',
 			cloudmade = L.tileLayer(cloudmadeUrl, {maxZoom: 19, attribution: cloudmadeAttribution});
 			// latlng = L.latLng(-37.82, 175.24);
 		
@@ -50,13 +52,30 @@
 			}
 		});
 
+		var LeafIcon = L.Icon.extend({
+			options: {
+				// shadowUrl: 'images/leaf-shadow.png',
+				iconSize:     [38, 38],
+				shadowSize:   [50, 64],
+				iconAnchor:   [22, 94],
+				shadowAnchor: [4, 62],
+				popupAnchor:  [-3, -76]
+			}
+		});
+
+		var greenIcon = new LeafIcon({iconUrl: 'images/leaf-green.png'}),
+			blueIcon = new LeafIcon({iconUrl: 'images/pin_blue.png'}),
+			pinkIcon = new LeafIcon({iconUrl: 'images/pink.png'});
+
 		var markers = L.markerClusterGroup();
 		
 		for (var i = 0; i < addressPoints.length; i++) {
 			var a = addressPoints[i];
 			var title = a[2];
-			var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title });
-			marker.bindPopup(title);
+			var marker = new MyCustomMarker(new L.LatLng(a[0], a[1]), { icon: blueIcon, title: title });
+			marker.bindPopup( title + "<br><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.</p><p>Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque.</p>", {
+            	showOnMouseOver: true
+       	 	});
 			markers.addLayer(marker);
 		}
 
