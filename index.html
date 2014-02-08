@@ -5,11 +5,9 @@
 	<title>Dart News</title>
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
 	<script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
-	<script type="text/javascript" src="js/jquery-1.4.2.min.js"> </script>
-	<script type="text/javascript" src="js/collapse_script.js"></script>
-	<link rel="stylesheet" href="css/collapse_style.css" type="text/css" media="screen, projection">
-
-
+	<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+	<script type='text/javascript' src='js/menu_jquery.js'></script>
+	<link rel="stylesheet" type="text/css" href="css/cssmenu.css"/>
 	
 	<link rel="stylesheet" href="dist/MarkerCluster.css" />
 	<link rel="stylesheet" href="dist/MarkerCluster.Default.css" />
@@ -23,7 +21,6 @@
 	        height: 100%;
 	        margin: 0;
       	}
-
 		.search-input {
 			font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif
 		}
@@ -31,7 +28,6 @@
 		.leaflet-control-search {
 			max-width:400px;
 		}
-
       	.leaflet-control-zoom-fullscreen { background-image: url(icon-fullscreen.png); }
 		/* on selector per rule as explained here : http://www.sitepoint.com/html5-full-screen-api/ */
 		#map:-webkit-full-screen { width: 100% !important; height: 100% !important; z-index: 99999; }
@@ -54,29 +50,22 @@
 	<script src="js/leaflet-search.js"></script>
 	<script>
 			var geocoder = new google.maps.Geocoder();
-
 			function googleGeocoding(text, callResponse)
 			{
 				geocoder.geocode({address: text}, callResponse);
 			}
-
 			function filterJSONCall(rawjson)
 			{
 				var json = {},
 					key, loc, disp = [];
-
 				for(var i in rawjson)
 				{
-					key = rawjson[i].formatted_address;
-					
-					loc = L.latLng( rawjson[i].geometry.location.lat(), rawjson[i].geometry.location.lng() );
-					
+					key = rawjson[i].formatted_address;					
+					loc = L.latLng( rawjson[i].geometry.location.lat(), rawjson[i].geometry.location.lng() );					
 					json[ key ]= loc;	//key,value format
 				}
-
 				return json;
 			}
-
 			map.addControl( new L.Control.Search({
 					callData: googleGeocoding,
 					filterJSON: filterJSONCall,
@@ -85,7 +74,7 @@
 					autoCollapse: true,
 					minLength: 2,
 					zoom: 10
-				}) );
+			}) );
 	</script>
 </body>
 </html>
