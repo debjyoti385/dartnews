@@ -119,7 +119,7 @@
 				// 	continue;
 				// }
 				var marker = new MyCustomMarker(new L.LatLng(latLongList[j][0], latLongList[j][1]), { icon: boardPin, title: title });
-				marker.bindPopup( "<div id='cssmenu' style='width: 200px;background: #555;margin-top:0.5cm;'> <ul>  <li class='has-sub'><a href='#'><span id='heading'>"+title.heading+"</span></a> <ul  > <li><b>LOCATION: </b> Latitude: " + latLongList[j][0].toFixed(4)+ " Longitude: "+ latLongList[j][1].toFixed(4) +" <li> <b> RELEVANCE INDEX: "+ latLongList[j][2].toFixed(3) +" </b><li></li>"+ title.contents+"</li>  </ul> </li><a href='"+title.link+"' target='_blank'><span id='category' style='display:none;'>"+title.category+"</span><span style='display:none; font-family:\"Playball\", cursive;font-size: 14px;color: #052A0A;'>   "+title.link+"</span></a>  </div>", {
+				marker.bindPopup( "<div id='cssmenu' style='width: 200px;background: #555;margin-top:0.5cm;'> <ul>  <li class='has-sub'><a href='#'><span id='heading'>"+title.heading+"</span></a> <ul  > <li><b>LOCATION:  Latitude: " + latLongList[j][0].toFixed(4)+ " Longitude: "+ latLongList[j][1].toFixed(4) +"</b> <li style='font-size:12px;'> <b> RELEVANCE INDEX: "+ latLongList[j][2].toFixed(3) +" </b><li></li>"+ title.contents+"</li>  </ul> </li><a href='"+title.link+"' target='_blank'><span id='category' style='display:none;'>"+title.category+"</span><span style='display:none; font-family:\"Playball\", cursive;font-size: 14px;color: #052A0A;'>   "+title.link+"</span></a>  </div>", {
 	            	showOnMouseOver: true
 	       	 	});
 	       	 	markers.push(marker);			
@@ -135,10 +135,10 @@
 					case 'PollutionEnvironment': marker.setIcon(blackInsideGreen); PollutionEnvironment.addLayer(marker); break;
 					case 'Events': marker.setIcon(pinkFlagCurl); Events.addLayer(marker); break;
 					case 'AccidentCalamity': marker.setIcon(blueInside); AccidentCalamity.addLayer(marker); break;
-					case 'TransportNews': marker.setIcon(blueInside); TransportNews.addLayer(marker); break;
+					case 'TransportNews': marker.setIcon(pinkBallPin); TransportNews.addLayer(marker); break;
 					case 'Culture': marker.setIcon(pinkPin); Culture.addLayer(marker); break;
 					case 'ElectricityLighting': marker.setIcon(blackInside); ElectricityLighting.addLayer(marker); break;
-					case 'Crime': marker.setIcon(blackInside); Crime.addLayer(marker); break;
+					case 'Crime': marker.setIcon(pinkFlagCurl); Crime.addLayer(marker); break;
 					case 'Political': marker.setIcon(greeFlagCurl); Political.addLayer(marker); break;
 					case 'Governance': marker.setIcon(greenInside); Governance.addLayer(marker); break;
 					case 'SocialIssues': marker.setIcon(blueBubble); SocialIssues.addLayer(marker); break;
