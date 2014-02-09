@@ -41,7 +41,7 @@
 	</style>
 	<script src="Control.FullScreen.js"></script>
 	<!-- <script src="example/realworld.388.js"></script> -->
-	<script src="example/final_newsjson.js"></script>
+	<script src="example/newsjson.js"></script>
 	<script src="example/mycustommarker.js"></script>
 </head>
 <body>
@@ -52,27 +52,35 @@
 	<script src="js/L.Control.Sidebar.js"></script>
 	<script src="js/ActiveLayers.js"></script>
 	<script src="js/dartnews.js"></script>
+	<script src="js/leaflet-heat.js"></script>
 
 	<script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
 	<script src="js/leaflet-search.js"></script>
 	<script>
 			var geocoder = new google.maps.Geocoder();
+
 			function googleGeocoding(text, callResponse)
 			{
 				geocoder.geocode({address: text}, callResponse);
 			}
+
 			function filterJSONCall(rawjson)
 			{
 				var json = {},
 					key, loc, disp = [];
+
 				for(var i in rawjson)
 				{
-					key = rawjson[i].formatted_address;					
-					loc = L.latLng( rawjson[i].geometry.location.lat(), rawjson[i].geometry.location.lng() );					
+					key = rawjson[i].formatted_address;
+					
+					loc = L.latLng( rawjson[i].geometry.location.lat(), rawjson[i].geometry.location.lng() );
+					
 					json[ key ]= loc;	//key,value format
 				}
+
 				return json;
 			}
+
 			map.addControl( new L.Control.Search({
 					callData: googleGeocoding,
 					filterJSON: filterJSONCall,

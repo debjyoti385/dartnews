@@ -107,39 +107,43 @@
 			Others = L.markerClusterGroup();
 
 		var markers = [];		
-		for (var i = 0; i < 100 ; i++) {
+		for (var i = 0; i < 1000 ; i++) {
 			var a = addressPoints[i];
 			var latLongList = a[0];
 			var title = eval('('+ a[1] +')');
 			// console.log(latLongList);
 			for( var j =0 ; j < latLongList.length; j++){
 				// console.log(latLongList[j][0] +"     "+ latLongList[j][1]);
+				// if( isNaN(latLongList[j][0]) || isNaN(latLongList[j][1])){
+				// 	// console.log("I am here");
+				// 	continue;
+				// }
 				var marker = new MyCustomMarker(new L.LatLng(latLongList[j][0], latLongList[j][1]), { icon: boardPin, title: title });
-				marker.bindPopup( "<div id='cssmenu' style='width: 200px;background: #555;margin-top:0.5cm;'> <ul>  <li class='has-sub'><a href='#'><span id='heading'>"+title.heading+"</span></a> <ul  > <li>LOCATION: " + latLongList[j][0]+ " "+ latLongList[j][1] +" <li>"+ title.contents+"</li>  </ul> </li><a href='"+title.link+"' target='_blank'><span id='category' style='display:none;'>"+title.category+"</span><span style='display:none; font-family:\"Playball\", cursive;font-size: 14px;color: #052A0A;'>   "+title.link+"</span></a>  </div>", {
+				marker.bindPopup( "<div id='cssmenu' style='width: 200px;background: #555;margin-top:0.5cm;'> <ul>  <li class='has-sub'><a href='#'><span id='heading'>"+title.heading+"</span></a> <ul  > <li><b>LOCATION: </b> Latitude: " + latLongList[j][0].toFixed(4)+ " Longitude: "+ latLongList[j][1].toFixed(4) +" <li> <b> RELEVANCE INDEX: "+ latLongList[j][2].toFixed(3) +" </b><li></li>"+ title.contents+"</li>  </ul> </li><a href='"+title.link+"' target='_blank'><span id='category' style='display:none;'>"+title.category+"</span><span style='display:none; font-family:\"Playball\", cursive;font-size: 14px;color: #052A0A;'>   "+title.link+"</span></a>  </div>", {
 	            	showOnMouseOver: true
 	       	 	});
 	       	 	markers.push(marker);			
        	 		switch(title.category){
-					case 'ReligiousNews': ReligiousNews.addLayer(marker); break;
-					case 'WaterNews': WaterNews.addLayer(marker); break;
-					case 'SportsNews': SportsNews.addLayer(marker); break;
-					case 'WomenIssues': WomenIssues.addLayer(marker); break;
-					case 'Agriculture': Agriculture.addLayer(marker); break;
-					case 'Education': Education.addLayer(marker); break;
-					case 'Industry': Industry.addLayer(marker); break;
-					case 'WeatherNews': WeatherNews.addLayer(marker); break;
-					case 'PollutionEnvironment': PollutionEnvironment.addLayer(marker); break;
-					case 'Events': Events.addLayer(marker); break;
-					case 'AccidentCalamity': AccidentCalamity.addLayer(marker); break;
-					case 'TransportNews': TransportNews.addLayer(marker); break;
-					case 'Culture': Culture.addLayer(marker); break;
-					case 'ElectricityLighting': ElectricityLighting.addLayer(marker); break;
-					case 'Crime': Crime.addLayer(marker); break;
-					case 'Political': Political.addLayer(marker); break;
-					case 'Governance': Governance.addLayer(marker); break;
-					case 'SocialIssues': SocialIssues.addLayer(marker); break;
-					case 'HealthHospital': HealthHospital.addLayer(marker); break;
-					case 'Development': Development.addLayer(marker); break;
+					case 'ReligiousNews': marker.setIcon(blueInside); ReligiousNews.addLayer(marker); break;
+					case 'WaterNews': marker.setIcon(blueBubble); WaterNews.addLayer(marker); break;
+					case 'SportsNews': marker.setIcon(bluePushPin); SportsNews.addLayer(marker); break;
+					case 'WomenIssues': marker.setIcon(boardPinPink); WomenIssues.addLayer(marker); break;
+					case 'Agriculture': marker.setIcon(boardGreenPin); Agriculture.addLayer(marker); break;
+					case 'Education': marker.setIcon(greenDrawing); Education.addLayer(marker); break;
+					case 'Industry': marker.setIcon(greenFlag); Industry.addLayer(marker); break;
+					case 'WeatherNews': marker.setIcon(blueFlagCurl); WeatherNews.addLayer(marker); break;
+					case 'PollutionEnvironment': marker.setIcon(blackInsideGreen); PollutionEnvironment.addLayer(marker); break;
+					case 'Events': marker.setIcon(pinkFlagCurl); Events.addLayer(marker); break;
+					case 'AccidentCalamity': marker.setIcon(blueInside); AccidentCalamity.addLayer(marker); break;
+					case 'TransportNews': marker.setIcon(blueInside); TransportNews.addLayer(marker); break;
+					case 'Culture': marker.setIcon(pinkPin); Culture.addLayer(marker); break;
+					case 'ElectricityLighting': marker.setIcon(blackInside); ElectricityLighting.addLayer(marker); break;
+					case 'Crime': marker.setIcon(blackInside); Crime.addLayer(marker); break;
+					case 'Political': marker.setIcon(greeFlagCurl); Political.addLayer(marker); break;
+					case 'Governance': marker.setIcon(greenInside); Governance.addLayer(marker); break;
+					case 'SocialIssues': marker.setIcon(blueBubble); SocialIssues.addLayer(marker); break;
+					case 'HealthHospital': marker.setIcon(blueFlagCurl); HealthHospital.addLayer(marker); break;
+					case 'Development': marker.setIcon(greenBubble); Development.addLayer(marker); break;
 					default: marker.setIcon(blueInside); Others.addLayer(marker); break;
        	 		}
        	 	}
