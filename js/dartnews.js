@@ -84,6 +84,7 @@
 			pinkIcon = new MyIcon({iconUrl: 'images/pink.png'});
 
 		var newsLayer = L.markerClusterGroup(),
+			heat = L.markerClusterGroup(),
 			ReligiousNews = L.markerClusterGroup(),
 			WaterNews = L.markerClusterGroup(),
 			SportsNews = L.markerClusterGroup(),
@@ -107,21 +108,21 @@
 			Others = L.markerClusterGroup();
 
 		var markers = [];		
+		var heatPoints=[];
 		for (var i = 0; i < 1000 ; i++) {
 			var a = addressPoints[i];
 			var latLongList = a[0];
 			var title = eval('('+ a[1] +')');
 			// console.log(latLongList);
 			for( var j =0 ; j < latLongList.length; j++){
-				// console.log(latLongList[j][0] +"     "+ latLongList[j][1]);
-				// if( isNaN(latLongList[j][0]) || isNaN(latLongList[j][1])){
-				// 	// console.log("I am here");
-				// 	continue;
-				// }
+				
+
 				var marker = new MyCustomMarker(new L.LatLng(latLongList[j][0], latLongList[j][1]), { icon: boardPin, title: title });
 				marker.bindPopup( "<div id='cssmenu' style='width: 200px;background: #555;margin-top:0.5cm;'> <ul>  <li class='has-sub'><a href='#'><span id='heading'>"+title.heading+"</span></a> <ul  > <li><b>LOCATION:  Latitude: " + latLongList[j][0].toFixed(4)+ " Longitude: "+ latLongList[j][1].toFixed(4) +"</b> <li style='font-size:12px;'> <b> RELEVANCE INDEX: "+ latLongList[j][2].toFixed(3) +" </b><li></li>"+ title.contents+"</li>  </ul> </li><a href='"+title.link+"' target='_blank'><span id='category' style='display:none;'>"+title.category+"</span><span style='display:none; font-family:\"Playball\", cursive;font-size: 14px;color: #052A0A;'>   "+title.link+"</span></a>  </div>", {
 	            	showOnMouseOver: true
 	       	 	});
+	       	 	
+	       	 	// heatPoints.push(heatPoint);
 	       	 	markers.push(marker);			
        	 		switch(title.category){
 					case 'ReligiousNews': marker.setIcon(blueInside); ReligiousNews.addLayer(marker); break;
@@ -138,7 +139,7 @@
 					case 'TransportNews': marker.setIcon(pinkBallPin); TransportNews.addLayer(marker); break;
 					case 'Culture': marker.setIcon(pinkPin); Culture.addLayer(marker); break;
 					case 'ElectricityLighting': marker.setIcon(blackInside); ElectricityLighting.addLayer(marker); break;
-					case 'Crime': marker.setIcon(pinkFlagCurl); Crime.addLayer(marker); break;
+					case 'Crime': marker.setIcon(pinkFlagCurl); var heatPoint = [latLongList[j][0],latLongList[j][1],latLongList[j][2]]; heatPoints.push(heatPoint); Crime.addLayer(marker); break;
 					case 'Political': marker.setIcon(greeFlagCurl); Political.addLayer(marker); break;
 					case 'Governance': marker.setIcon(greenInside); Governance.addLayer(marker); break;
 					case 'SocialIssues': marker.setIcon(blueBubble); SocialIssues.addLayer(marker); break;
@@ -150,6 +151,9 @@
 			// newsLayer.addLayer(marker);
 		}
 		// map.addLayer(newsLayer);
+
+		var heat = L.heatLayer(heatPoints).addTo(map);
+		map.addLayer(heat);
 		map.addLayer(ReligiousNews);
 		map.addLayer(WaterNews);
 		map.addLayer(SportsNews);
@@ -172,6 +176,7 @@
 		map.addLayer(Development);
 		map.addLayer(Others);
 
+		map.removeLayer(heat);
 		map.removeLayer(Esri_WorldStreetMap);
 		map.removeLayer(OpenStreetMap_BlackAndWhite);
 		map.removeLayer(cloudmade);
@@ -208,6 +213,7 @@
 		};
 
 		var overlayMaps = {
+			"CrimeHeat" : heat,
 		    // "News": newsLayer,
 		    "ReligiousNews":ReligiousNews,
 			"WaterNews":WaterNews,
